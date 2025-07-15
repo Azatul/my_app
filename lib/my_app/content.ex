@@ -17,8 +17,10 @@ defmodule MyApp.Content do
       [%Post{}, ...]
 
   """
-  def list_posts do
-    Repo.all(Post)
+   def list_posts(opts \\ []) do
+    preload_opt = Access.get(opts, :preload, [])
+
+    Repo.all(from p in Post, preload: ^preload_opt)
   end
 
   @doc """
@@ -47,12 +49,12 @@ defmodule MyApp.Content do
   # def get_post!(id), do: Repo.get!(Post, id)
 
   def get_post!(id, opts \\ []) do
-    preload_opt = Keyword.get(opts, :preload, [])
-    Post
-    |> Repo.get!(id)
-    |> Repo.preload(preload_opt)
-  end
+    preload_opt = Access.get(opts, :preload, [])
 
+    Post
+    |> preload(^preload_opt)
+    |> Repo.get!(id)
+  end
 
   @spec create_post() :: any()
   @doc """

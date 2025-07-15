@@ -14,7 +14,7 @@
   rows={@streams.users}
   row_click={fn {_id, user} -> JS.navigate(~p"/users/#{user}") end}
 >
-  <:col :let={{_id, user}} label="User ID">{user.id}</:col
+  <:col :let={{_id, user}} label="User ID">{user.id}</:col>
   <:col :let={{_id, user}} label="Name">{user.name}</:col>
   <:col :let={{_id, user}} label="Age">{user.age}</:col>
   <:col :let={{_id, user}} label="Gender">{user.gender}</:col>
