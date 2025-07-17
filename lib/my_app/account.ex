@@ -101,4 +101,36 @@ defmodule MyApp.Account do
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
   end
+
+  def print_users_name do
+    users = list_users()
+
+    Enum.each(users, fn user ->
+      IO.puts(user.name)
+    end)
+  end
+
+  def print_user_categories do
+    list_users()
+    |> Enum.map(fn user ->
+      category =
+        cond do
+          user.age < 18 -> "minor"
+          user.age < 60 -> "adult"
+          true -> "senior"
+        end
+
+      "#{user.name} is a #{category}"
+    end)
+    |> Enum.each(&IO.puts/1)
+  end
+
+
+  def print_user_age_statements do
+    list_users()
+    |> Enum.map(fn user ->
+      "#{user.name} is #{user.age} years old"
+    end)
+    |> Enum.each(&IO.puts/1)
+  end
 end
